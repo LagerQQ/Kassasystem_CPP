@@ -33,34 +33,72 @@ void save_receipt(const std::string& receiptContent) {
 int main() {
     
     std::vector<Item> items = {
-        {}
-    }
+        {300, "Bananer", 12.50},
+        {301, "Kaffe",   35.50}
+    };
     
     
     int menu_options = 0;
-    int choice = 0;
     
     do {
         std::cout << "\nKASSA\n";
         std::cout << "1. Ny kund\n";
+        std::cout << "2. Admin meny\n";
         std::cout << "0. Avsluta\n";
+        std::cout << "Val: ";
         std::cin >> menu_options;
-
+        
         switch (menu_options)
         {
-        case 1:
-            switch (choice)
-            {
-            case 1:
-                std::string kvitto =
-                    "----- KVITTO ------\n"
+        case 1: {
+            int choice = 0;
+            time_t timestamp;
+            time(&timestamp);
+            do {
+                std::cout << "\nKVITTO\t" << ctime(&timestamp) << "\n";
+                std::cout << "";
+                std::cout << "";
+                std::cin >> choice;
 
-                break;
+                switch (choice)
+                {
+                case 1: {
+                    int id;
+                    std::cout << "Ange product-ID: ";
+                    std::cin >> id;
+
+                    bool found = false;
+
+                    for (auto &it : items) {
+                        if (it.id == id) {
+                            std::cout << "Du valde: "
+                                      << it.name << " - "
+                                      << it.price << " kr\n";
+
+                            
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        std::cout << "Ingen produkt med ID " << id << " hittades.\n";
+                    }
+                    break;
+                }
+
+                case 2:
+                    std::cout << "Avsluta kund...\n";
+                    break;
+                
+                default:
+                    std::cout << "Ogiltigt val!\n";
+                    break;
+                }
+            } while (choice != 2);
             
-            default:
-                break;
-            }
             break;
+        }
         case 0:
             std::cout << "Avslutar...\n";
             break;
