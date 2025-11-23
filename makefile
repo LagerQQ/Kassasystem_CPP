@@ -1,13 +1,26 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -std=c11
+# Kompilator
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -Wextra -O2
+
+# Källfiler
 SRC = main.cpp
-OBJ = $(SRC:.c=.o)
-TARGET = main.exe
+OBJ = $(SRC:.cpp=.o)
+
+# Output-program
+TARGET = kassa
+
 all: $(TARGET)
+
 $(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJ)
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Kör programmet
+run: $(TARGET)
+	./$(TARGET)
+
+# Ta bort byggfiler
 clean:
 	rm -f $(OBJ) $(TARGET)
-.PHONY: all clean
